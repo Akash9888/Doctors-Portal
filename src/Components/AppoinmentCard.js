@@ -1,11 +1,12 @@
 const AppoinmentCard = ({ slot, setDetails }) => {
     const { _id, name, slots } = slot;
-    console.log(slots);
 
     return (
-        <div class="rounded-xl border bg-white  drop-shadow-2xl text-center ">
-            <div class="card-body">
-                <h2 class="text-xl font-semibold  text-[#19D3AE]">{name}</h2>
+        <div className="rounded-xl border bg-white  drop-shadow-2xl text-center ">
+            <div className="card-body">
+                <h2 className="text-xl font-semibold  text-[#19D3AE]">
+                    {name}
+                </h2>
                 <p className="text-base text-black font-normal">
                     {slots.length ? (
                         <span>{slots[0]}</span>
@@ -19,7 +20,7 @@ const AppoinmentCard = ({ slot, setDetails }) => {
                     {slots.length} {slots.length > 1 ? "spaces" : "space"}{" "}
                     available
                 </p>
-                <div class="card-actions justify-center">
+                <div className="card-actions justify-center">
                     <label
                         for="booking-modal"
                         className="btn"

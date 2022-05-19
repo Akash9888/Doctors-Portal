@@ -18,8 +18,8 @@ const Testomonial = () => {
                         content
                     </p>
                     <div className="flex  items-center mt-8 space-x-5">
-                        <div class="avatar">
-                            <div class="w-[75px] h-[75px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <div className="avatar">
+                            <div className="w-[75px] h-[75px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                 <img src={people1} />
                             </div>
                         </div>
@@ -38,8 +38,8 @@ const Testomonial = () => {
                         content
                     </p>
                     <div className="flex  items-center mt-8 space-x-5">
-                        <div class="avatar">
-                            <div class="w-[75px] h-[75px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <div className="avatar">
+                            <div className="w-[75px] h-[75px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                 <img src={people1} />
                             </div>
                         </div>
@@ -58,8 +58,8 @@ const Testomonial = () => {
                         content
                     </p>
                     <div className="flex  items-center mt-8 space-x-5">
-                        <div class="avatar">
-                            <div class="w-[75px] h-[75px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <div className="avatar">
+                            <div className="w-[75px] h-[75px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                 <img src={people1} />
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../Firebase/FirebaseConfig";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import Progress from "../../Components/Progress";
@@ -10,6 +10,10 @@ const Login = () => {
         useSignInWithEmailAndPassword(auth);
     const emailRef = useRef("");
     const passwordRef = useRef("");
+    let navigate = useNavigate();
+    let location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
     if (loading) {
         return <Progress />;
     }
@@ -17,7 +21,8 @@ const Login = () => {
         console.log(error.message);
     }
     if (user) {
-        console.log(user);
+        console.log("Navigfate");
+        navigate(from, { replace: true });
     }
     const loginFormSubmit = (e) => {
         e.preventDefault();
@@ -39,7 +44,7 @@ const Login = () => {
                 onSubmit={loginFormSubmit}>
                 <div className="space-y-1 text-sm">
                     <label
-                        for="username"
+                        htmlFor="username"
                         className="block dark:text-coolGray-400">
                         Email
                     </label>
@@ -53,7 +58,7 @@ const Login = () => {
                 </div>
                 <div className="space-y-1 text-sm">
                     <label
-                        for="password"
+                        htmlFor="password"
                         className="block dark:text-coolGray-400">
                         Password
                     </label>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import AppoinmentCard from "../../Components/AppoinmentCard";
 import BookingModal from "./BookingModal";
@@ -7,12 +8,17 @@ const BookAppoinment = ({ date }) => {
     const [details, setDetails] = useState(null);
 
     useEffect(() => {
-        fetch(`slot.json`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setSlots(data);
-            });
+        axios
+            .get(`http://localhost:5000/appointmentData`)
+            .then((response) => {
+                setSlots(response.data);
+                console.log(response.data);
+                console.log(slots);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {});
     }, []);
     return (
         <div className="container mx-auto p-6">

@@ -7,7 +7,7 @@ const GoogleLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const navigate = useNavigate();
     const location = useLocation();
-    // let from = location.state?.from?.pathname || "/";
+    let from = location.state?.from?.pathname || "/";
     if (error) {
         console.log(error.message);
     }
@@ -15,8 +15,7 @@ const GoogleLogin = () => {
         return <Progress />;
     }
     if (user) {
-        console.log(user);
-        // navigate(from, { replace: true });
+        navigate(from, { replace: true });
     }
     const googleLogin = () => {
         signInWithGoogle();

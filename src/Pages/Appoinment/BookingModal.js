@@ -1,70 +1,116 @@
 import { useAuthState } from "react-firebase-hooks/auth";
+import { toast, ToastContainer } from "react-toastify";
 import auth from "../../Firebase/FirebaseConfig";
+import useBooking from "../../hooks/useBooking";
+import Progress from "../../Components/Progress";
+import axios from "axios";
+import { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
 const BookingModal = ({ details, date, setDetails }) => {
     const [user] = useAuthState(auth);
-    console.log(details.slots);
+    const { saveBookingData, loading, error, data } = useBooking(
+        "http://localhost:5000/save/bookingData"
+    );
+    console.log("----------------------------------------");
+    console.log(data);
+    console.log(loading);
+    console.log(error.message);
+    console.log("***************");
+    if (error) {
+        toast.error(error.message);
+    }
+    if (loading) {
+        console.log("load");
+        return <Progress />;
+    }
+    if (data.length > 0) {
+        console.log("########");
+        console.log(data.length);
+        toast(data);
+        // console.log(data.status);
+        // if (data.status == "failed") {
+        //     toast.error("Allready have an appointment");
+        // } else {
+        //     toast.success("Appointment booked successfully");
+        // }
+    }
+    let bookingData = {};
     const booking = (e) => {
         e.preventDefault();
-        console.log("ticket booked");
-        setDetails(null);
+
+        bookingData.treatmentType = details.name;
+        bookingData.slot = e.target.slot.value;
+        bookingData.date = e.target.date.value;
+        bookingData.name = user?.displayName;
+        bookingData.email = user?.email;
+        bookingData.phone = e.target.phone.value;
+
+        saveBookingData(bookingData);
     };
     return (
         <div>
-            <input type="checkbox" id="booking-modal" class="modal-toggle" />
-            <div class="modal ">
-                <div class="modal-box relative">
+            <input
+                type="checkbox"
+                id="booking-modal"
+                className="modal-toggle"
+            />
+            <div className="modal ">
+                <div className="modal-box relative">
                     <label
                         for="booking-modal"
-                        class="btn btn-sm btn-circle absolute right-2 top-2">
+                        className="btn btn-sm btn-circle absolute right-2 top-2">
                         ✕
                     </label>
-                    <h3 class="text-xl text-black font-semibold">
+                    <h3 className="text-xl text-black font-semibold">
                         {details.name}
                     </h3>
                     <form onSubmit={booking}>
-                        <label class="label">
-                            <span class="label-text ">Date</span>
+                        <label className="label">
+                            <span className="label-text ">Date</span>
                         </label>
                         <input
                             type="text"
+                            id="date"
                             value={date.toLocaleDateString("en-US")}
                             readOnly
-                            class="input input-bordered w-full "
+                            className="input input-bordered w-full "
                         />
-                        <label class="label">
-                            <span class="label-text ">Time Slot</span>
+                        <label className="label">
+                            <span className="label-text ">Time Slot</span>
                         </label>
-                        <select class="w-full select select-bordered">
+                        <select
+                            id="slot"
+                            className="w-full select select-bordered">
                             {details.slots.map((slot) => {
                                 return <option>{slot}</option>;
                             })}
                         </select>
-                        <label class="label">
-                            <span class="label-text ">Name</span>
+                        <label className="label">
+                            <span className="label-text ">Name</span>
                         </label>
                         <input
                             type="text"
                             value={user?.displayName}
                             readOnly
-                            class="input input-bordered w-full "
+                            className="input input-bordered w-full "
                         />
-                        <label class="label">
-                            <span class="label-text ">Phone Number</span>
+                        <label className="label">
+                            <span className="label-text ">Phone Number</span>
                         </label>
                         <input
                             type="text"
-                            value={user?.phoneNumber}
-                            readOnly
-                            class="input input-bordered w-full "
+                            id="phone"
+                            required={true}
+                            className="input input-bordered w-full "
                         />
-                        <label class="label">
-                            <span class="label-text ">Email</span>
+                        <label className="label">
+                            <span className="label-text ">Email</span>
                         </label>
                         <input
                             type="text"
                             value={user?.email}
                             readOnly
-                            class="input input-bordered w-full "
+                            className="input input-bordered w-full "
                         />
                         <button
                             type="submit"
@@ -79,6 +125,7 @@ const BookingModal = ({ details, date, setDetails }) => {
                     </form>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

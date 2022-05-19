@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import SignUp from "./Pages/Authentication/SignUp";
 import Appoinments from "./Pages/Appoinment/Appoinments";
+import RequiredAuth from "./Pages/Authentication/RequiredAuth";
 function App() {
     return (
         <div className="App">
@@ -12,7 +13,14 @@ function App() {
             <Routes>
                 <Route path="/">
                     <Route index element={<Home />} />
-                    <Route path="/appoinment" element={<Appoinments />} />
+                    <Route
+                        path="/appoinment"
+                        element={
+                            <RequiredAuth>
+                                <Appoinments />
+                            </RequiredAuth>
+                        }
+                    />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
                 </Route>
